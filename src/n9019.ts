@@ -16,7 +16,8 @@ for (let i = 1; i < input.length; i++) {
     let now = +input[i].split(' ')[0];
     let target = +input[i].split(' ')[1];
 
-    array.push({ num: now, command: "" });
+    array.push({ num: now, command: [] });
+    
 
     while (true) {
         let cur = array.shift()!;
@@ -63,5 +64,5 @@ function R(num: number): number {
 
 interface State {
     num: number
-    command: string
+    command: string[]
 }
