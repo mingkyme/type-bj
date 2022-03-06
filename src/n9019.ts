@@ -9,42 +9,59 @@ if (process.platform == 'linux') {
 1 16`.split('\n');
 }
 
-
+let str = "";
 for (let i = 1; i < input.length; i++) {
-    let isChecked = new Array(10000).fill(false);
+    // let isChecked = new Array(10000).fill(false);
+    let isChecked: boolean[] = [];
+
+    for (let j = 0; j < 10000; j++) {
+        isChecked[i] = false;
+        // isChecked.push(false);
+    }
     let array: State[] = []; // Queue
     let now = +input[i].split(' ')[0];
     let target = +input[i].split(' ')[1];
 
-    array.push({ num: now, command: [] });
-    
+    array.push({ num: now, command: "" });
+
 
     while (true) {
         let cur = array.shift()!;
-        if(isChecked[cur.num]){
-            continue;
-        }
-        isChecked[cur.num] = true;
+        // if(isChecked[cur.num]){
+        //     continue;
+        // }
+        // isChecked[cur.num] = true;
         if (cur?.num == target) {
-            console.log(cur.command);
+            str += `${cur.command}\n`;
             break;
         }
-        array.push({ num: D(cur?.num!), command: cur?.command.concat("D") });
-        // if(isChecked[cur.num]){
-        // }
-        array.push({ num: S(cur?.num!), command: cur?.command.concat("S") });
-        // if(isChecked[cur.num]){
-        // }
-        array.push({ num: L(cur?.num!), command: cur?.command.concat("L") });
-        // if(isChecked[cur.num]){
-        // }
-        array.push({ num: R(cur?.num!), command: cur?.command.concat("R") });
-        // if(isChecked[cur.num]){
-        // }
+        let numD = D(cur.num);
+        if (!isChecked[numD]) {
+            isChecked[numD] = true;
+            array.push({ num: numD, command: cur?.command.concat("D") });
+        }
+
+        let numS = S(cur.num);
+        if (!isChecked[numS]) {
+            isChecked[numS] = true;
+            array.push({ num: numS, command: cur?.command.concat("S") });
+        }
+
+        let numL = L(cur.num);
+        if (!isChecked[numL]) {
+            isChecked[numL] = true;
+            array.push({ num: numL, command: cur?.command.concat("L") });
+        }
+
+        let numR = R(cur.num);
+        if (!isChecked[numR]) {
+            isChecked[numR] = true;
+            array.push({ num: numR, command: cur?.command.concat("R") });
+        }
     }
 
 }
-
+console.log(str);
 function D(num: number): number {
     return (num * 2) % 10000;
 }
@@ -57,12 +74,12 @@ function L(num: number): number {
     return bcd * 10 + a;
 }
 function R(num: number): number {
-    let abc = Math.floor(num/10);
+    let abc = Math.floor(num / 10);
     let d = num % 10;
-    return d*1000+abc;
+    return d * 1000 + abc;
 }
 
 interface State {
     num: number
-    command: string[]
+    command: string
 }
