@@ -8,7 +8,8 @@ if(process.platform == 'linux'){
 58 183
 88 186
 60 175
-46 155`.split('\n');
+46 155
+50 180`.split('\n');
 }
 
 let array :number[][] = [];
