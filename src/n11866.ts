@@ -18,20 +18,10 @@ for(let i=0;i<peopleCount;i++){
 }
 
 let output :number[]= [];
-let outCount = 0;
-while(true){
-    if(queue.length == outCount){
-        break;
-    }
-    if(queue[idx] == 0){
-        idx++;
-        continue;
-    }
-    outCount++;
-    output.push(queue[idx]);
-    queue[idx] = 0;
-    idx = (idx+roundNumber) %  peopleCount;
-    
+
+while(queue.length>0){
+    output.push(queue.splice(idx,1)[0])
+    idx = (idx+roundNumber-1) % queue.length;
 }
 
-console.log(output)
+console.log(`<${output.join(', ')}>`)
