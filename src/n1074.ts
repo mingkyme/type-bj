@@ -6,41 +6,41 @@ if (process.platform == 'linux') {
     input = `10 512 512`.split('\n');
 }
 let line = input[0].split(' ').map((n) => +n);
+
 let N = line[0];
 let r = line[1];
 let c = line[2];
-
-let now = 0;
 let result = 0;
 
-SetNumber(0,0,Math.pow(2,N),r,c);
+SetNumber(N, r, c);
 console.log(result);
 
-
-function SetNumber(i: number, j: number, size: number, targetI: number, targetJ: number) {
-    if(i > targetI && j > targetJ){
+function SetNumber(N: number, r: number, c: number) {
+    if (N == 0) {
         return;
-    }else if (size == 2) {
-        if(i == targetI && j == targetJ){
-            result = now;
-        }
-        now++;
-        if(i == targetI && j+1 == targetJ){
-            result = now;
-        }
-        now++;
-        if(i+1 == targetI && j == targetJ){
-            result = now;
-        }
-        now++;
-        if(i+1 == targetI && j+1 == targetJ){
-            result = now;
-        }
-        now++;
-    } else {
-        SetNumber(i, j, size / 2, r, c);
-        SetNumber(i, j + (size / 2), size / 2, r, c);
-        SetNumber(i + (size / 2), j, size / 2, r, c);
-        SetNumber(i + (size / 2), j + (size / 2), size / 2, r, c);
     }
+    let n2 = Math.pow(2, N - 1);
+    let n4 = Math.pow(4, N - 1);
+    if (r < n2 && c < n2) {
+        // 좌 상
+        result += 0;
+        SetNumber(N-1, r, c);
+
+    } else if (r < n2 && c >= n2) {
+        // 좌 하
+        result += n4;
+        SetNumber(N-1, r, c - n2);
+
+    } else if (r >= n2 && c < n2) {
+        // 우 상
+        result += n4 * 2;
+        SetNumber(N-1, r - n2, c);
+
+    } else {
+        // 우 하
+        result += n4 * 3;
+        SetNumber(N-1, r - n2, c - n2);
+
+    }
+
 }
