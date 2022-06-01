@@ -10,4 +10,4 @@ if (process.platform == 'linux') {
 }
 let numbers = input.map((n) => +n);
 
-console.log(4 + 2 * Math.max(numbers[0], numbers[1]) + 2 * (numbers[2] + numbers[3]));
+console.log(4 + 2 * Math.max(numbers[0], numbers[2]) + 2 * (numbers[1] + numbers[3]));
